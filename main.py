@@ -13,10 +13,9 @@ plt.rcParams["figure.autolayout"] = True
            "Custom field (ReadyForRelease datetime)", "Custom field (Release datetime)",
            "Custom field (ToDo datetime)"]'''
 
-columns = ["Issue key", "Custom field (ToDo datetime)", "Custom field (InTesting datetime)"]
+columns = ["Issue key", "Issue Type", "Custom field (ToDo datetime)", "Custom field (InTesting datetime)"]
 
-df = pd.read_csv("/Users/rtimganov/Downloads/FH Data/LIS3(10-14S).csv", usecols=columns)
-'''df["To Test"] = (df["Custom field (InTesting datetime)"] - df["Custom field (ToDo datetime)"]).dt.days'''
-print("Contents in csv file:", df)
-plt.plot(df)
-plt.show()
+df = pd.read_csv("/Users/rtimganov/Downloads/FH Data/LIS3(10-14S).csv", usecols=columns,
+                 parse_dates=["Custom field (ToDo datetime)", "Custom field (InTesting datetime)"])
+df["To Test"] = (df["Custom field (InTesting datetime)"] - df["Custom field (ToDo datetime)"]).dt.days
+print(df.to_string())
